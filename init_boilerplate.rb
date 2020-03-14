@@ -58,19 +58,18 @@ end
 
 def display_header
   puts "\n========================================".blue
-  puts "\tInitialize Boilerplate\n"
+  puts "\tInitialize Boilerplate".blue
   puts "========================================\n".blue
   puts "\nThe current working directory is:\n"
   puts Dir.pwd
 end
 
 def display_menu
-  puts "\nSelect an option:\n"
-  puts "1. Create node.js project\n"
-  puts "2. Create react.js project\n"
-  puts "3. Add GitHub templates\n"
-  puts "4. Exit\n\n"
-  puts 'Your choice: '
+  puts "\n1. Create node.js project".light_blue
+  puts '2. Create react.js project'.light_blue
+  puts '3. Add GitHub templates'.light_blue
+  puts "4. Exit\n".light_blue
+  puts 'Select an option:'.yellow
   input = STDIN.gets.chomp.strip
   process_option(input.to_i)
 end
@@ -93,6 +92,7 @@ def check_already_init
 end
 
 def check_npm
+  puts 'Checking npm...'.yellow
   return unless system('npm --version').nil?
 
   puts 'Error: npm is not installed'.red
@@ -257,12 +257,13 @@ def configure_husky
 end
 
 def create_node_project
-  puts 'Creating node.js project'.green
-  check_npm
-  check_already_init
-  puts "Does your project use TypeScript? (y/n)\n"
+  puts 'Does your project use TypeScript? (y/n)'.yellow
   input = STDIN.gets.strip.chomp
   typescript = input == 'y'
+  puts 'Creating node.js project'.green
+  puts 'With TypeScript' if typescript
+  check_npm
+  check_already_init
   configure_typescript(false) if typescript
   create_node_directory(typescript)
   configure_nodemon
@@ -274,12 +275,13 @@ def create_node_project
 end
 
 def create_react_project
-  puts 'Creating react.js project'
-  check_npm
-  check_already_init
-  puts "Does your project use TypeScript? (y/n)\n"
+  puts 'Does your project use TypeScript? (y/n)'.yellow
   input = STDIN.gets.strip.chomp
   typescript = input == 'y'
+  puts 'Creating react.js project'.green
+  puts 'With TypeScript' if typescript
+  check_npm
+  check_already_init
   if typescript
     configure_typescript(true)
     system('npx create-react-app . --template typescript')
@@ -299,16 +301,13 @@ end
 def process_option(choice)
   case choice
   when 4
-    puts "\nExiting..."
+    puts "\nExiting...".green
     exit(0)
   when 3
-    puts "\nAdd GitHub templates"
     add_templates
   when 2
-    puts "\nCreate react.js project"
     create_react_project
   when 1
-    puts "\nCreate node.js project"
     create_node_project
   else
     puts "\nYour input is invalid, returning to menu..."
