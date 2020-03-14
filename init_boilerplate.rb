@@ -172,7 +172,7 @@ def configure_typescript(react)
     system('npm install --save-dev @types/express')
     system('npm install express')
   end
-  system('npx tsc --init --rootDir src --outDir build --moduleResolution "node" --esModuleInterop --resolveJsonModule --lib esnext --sourceMap --module commonjs --allowJs true --noImplicitAny true --target "esnext"')
+  system('npx tsc --init --rootDir src --outDir build --moduleResolution "node" --esModuleInterop --resolveJsonModule --sourceMap --module commonjs --allowJs true --noImplicitAny true --target "es6"')
 end
 
 def configure_eslint(react)
