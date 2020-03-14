@@ -12,8 +12,9 @@ LINT_STAGED = '.lintstagedrc'
 HUSKY = '.huskyrc'
 ES_LINT = '.eslintrc.json'
 STYLE_LINT = '.stylelintrc.json'
+COMMIT_LINT = '.commitlintrc.json'
 
-CONFIGS = [].freeze
+CONFIGS = []
 
 CONFIGS << PACKAGE
 CONFIGS << PRETTIER
@@ -24,6 +25,7 @@ CONFIGS << LINT_STAGED
 CONFIGS << HUSKY
 CONFIGS << ES_LINT
 CONFIGS << STYLE_LINT
+CONFIGS << COMMIT_LINT
 
 class String
   # colorization
@@ -57,9 +59,9 @@ class String
 end
 
 def display_header
-  puts "\n========================================".colorize(blue)
-  puts "\tInitialize Boilerplate\n".colorize(pink)
-  puts "========================================\n".colorize(blue)
+  puts "\n========================================".blue
+  puts "\tInitialize Boilerplate\n"
+  puts "========================================\n".blue
   puts "\nThe current working directory is:\n"
   puts Dir.pwd
 end
@@ -77,9 +79,9 @@ end
 
 def check_already_init
   if File.file?(PACKAGE)
-    puts "#{PACKAGE} exists and will be used".colorize(green)
+    puts "#{PACKAGE} exists and will be used".green
   else
-    puts "#{PACKAGE} does not exist".colorize(green)
+    puts "#{PACKAGE} does not exist".green
     system('npm init -y')
     package_json = File.read(PACKAGE)
     package_hash = JSON.parse(package_json)
@@ -95,12 +97,12 @@ end
 def check_npm
   return unless system('npm --version').nil?
 
-  puts 'Error: npm is not installed'.colorize(red)
+  puts 'Error: npm is not installed'.red
   exit(1)
 end
 
 def create_node_directory
-  puts 'Creating src directory...'.colorize(green)
+  puts 'Creating src directory...'.green
   path = './src/index.ts'
   dir = File.dirname(path)
   FileUtils.mkdir_p(dir) unless File.directory?(dir)
@@ -108,16 +110,16 @@ def create_node_directory
 end
 
 def configure_nodemon
-  puts 'Configuring nodemon...'.colorize(green)
+  puts 'Configuring nodemon...'.green
   if File.exist?(NODEMON)
     return "#{NODEMON} already exists and will not be configured"
   end
 
   hash = {
-      watch: ['src'],
-      ext: '.ts,.js',
-      ignore: [],
-      exec: 'ts-node ./src/index.ts'
+    watch: ['src'],
+    ext: '.ts,.js',
+    ignore: [],
+    exec: 'ts-node ./src/index.ts'
   }
   File.open(NODEMON, 'w+') do |file|
     file.truncate(0)
@@ -127,7 +129,7 @@ def configure_nodemon
 end
 
 def configure_ts_lint
-  puts 'Configuring tslint...'.colorize(green)
+  puts 'Configuring tslint...'.green
   system('npx tslint --init')
   ts_lint = File.read(TS_LINT)
   ts_lint_hash = JSON.parse(ts_lint)
@@ -144,7 +146,7 @@ def configure_ts_lint
 end
 
 def update_node_package_json
-  puts "Updating #{PACKAGE} scripts...".colorize(green)
+  puts "Updating #{PACKAGE} scripts...".green
   package_json = File.read(PACKAGE)
   package_hash = JSON.parse(package_json)
   package_hash['scripts']['start:dev'] = 'nodemon'
@@ -157,16 +159,17 @@ def update_node_package_json
 end
 
 def configure_prettier
-  puts 'Installing and configuring prettier...'.colorize(green)
+  puts 'Installing and configuring prettier...'.green
   system('npm install --save-dev prettier tslint-config-prettier tslint-plugin-prettier')
   if File.exist?(PRETTIER)
     return "#{PRETTIER} already exists and will not be configured"
   end
+
   hash = {
-      trailingComma: 'es5',
-      arrowParens: 'always',
-      singleQuote: true,
-      printWidth: 120
+    trailingComma: 'es5',
+    arrowParens: 'always',
+    singleQuote: true,
+    printWidth: 120
   }
   File.open(PRETTIER, 'w+') do |file|
     file.write(JSON.pretty_generate(hash))
@@ -176,14 +179,14 @@ end
 
 def configure_typescript
   create_node_directory
-  puts 'Installing and configuring typescript...'.colorize(green)
+  puts 'Installing and configuring typescript...'.green
   system('npm install --save-dev typescript tslint @types/node ts-node nodemon rimraf @types/express')
   system('npm install express')
   system('npx tsc --init --rootDir src --outDir build --moduleResolution "node" --esModuleInterop --resolveJsonModule --lib esnext --sourceMap --module commonjs --allowJs true --noImplicitAny true --target "esnext"')
 end
 
 def configure_eslint(react)
-  puts 'Installing and configuring ESLint...'.colorize(green)
+  puts 'Installing and configuring ESLint...'.green
   system('npm install --save-dev eslint eslint-plugin-prettier eslint-config-prettier')
   system('npx eslint --init')
   es_lint = File.read(ES_LINT)
@@ -201,29 +204,66 @@ def configure_eslint(react)
 end
 
 def install_node_dependencies
-  puts 'Installing dev dependencies...'.colorize(green)
-  system('npm install --save-dev husky lint-staged commitlint')
+  puts 'Installing dev dependencies...'.green
+  system('npm install --save-dev husky lint-staged')
 end
 
 def configure_stylelint
-  puts 'Installing and configuring stylelint...'.colorize(green)
+  puts 'Installing and configuring stylelint...'.green
   system('npm install --save-dev stylelint stylelint-config-standard stylelint-config-sass-guidelines stylelint-prettier stylelint-config-prettier')
   hash = {
-      extends: %w[stylelint-config-standard stylelint-config-sass-guidelines stylelint-prettier/recommended],
-      plugins: ['stylelint-prettier'],
-      rules: {
-          'prettier/prettier': true
-      }
+    extends: %w[stylelint-config-standard stylelint-config-sass-guidelines stylelint-prettier/recommended],
+    plugins: ['stylelint-prettier'],
+    rules: {
+      'prettier/prettier': true
+    }
   }
   File.open(STYLE_LINT, 'w+') do |file|
     file.write(JSON.pretty_generate(hash))
     file.close
   end
+end
 
+def configure_commitlint
+  puts 'Installing and configuring commitlint...'
+  system('npm install --save-dev @commitlint/{config-conventional,cli} stylefmt')
+  hash = { extends: ['@commitlint/config-conventional'] }
+  File.open(COMMIT_LINT, 'w+') do |file|
+    file.write(JSON.pretty_generate(hash))
+    file.close
+  end
+end
+
+def configure_husky
+  puts 'Installing and configuring husky with lint-staged...'
+  system('npx mrm lint-staged')
+  package_json = File.read(PACKAGE)
+  package_hash = JSON.parse(package_json)
+  package_hash['husky']['hooks']['commit-msg'] = 'commitlint -E HUSKY_GIT_PARAMS'
+  git_add = 'git add'
+  package_hash['lint-staged'] = {
+    '*.+(js|jsx|ts|tsx)': [
+      'eslint --cache --fix',
+      git_add
+    ],
+    '*.+(json|css|md|html|ts|tsx|jsx)': [
+      'prettier --write',
+      git_add
+    ],
+    '*.+(css|less|sass)': [
+      'stylefmt',
+      'stylelint --fix',
+      git_add
+    ]
+  }
+  File.open(PACKAGE, 'w+') do |file|
+    file.write(JSON.pretty_generate(package_hash))
+    file.close
+  end
 end
 
 def create_node_project
-  puts 'Creating node.js project'.colorize(green)
+  puts 'Creating node.js project'.green
   check_npm
   check_already_init
   install_node_dependencies
@@ -233,6 +273,8 @@ def create_node_project
   update_node_package_json
   configure_prettier
   configure_eslint(false)
+  configure_commitlint
+  configure_husky
 end
 
 def create_react_project
@@ -267,7 +309,7 @@ def process_option(choice)
 end
 
 def clean_directory
-  puts "\nCleaning directory...".colorize(light_blue)
+  puts "\nCleaning directory...".light_blue
   FileUtils.rm_rf 'src' if File.directory?('src')
   CONFIGS.each do |config|
     File.delete(config) if File.exist?(config)

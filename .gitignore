@@ -6,3 +6,4 @@ package.json
 nodemon.json
 .prettierrc
 .eslintrc.json
+.commitlintrc.json
