@@ -1,6 +1,8 @@
+require './Rakefile'
+
 Gem::Specification.new do |s|
   s.name = 'init-boilerplate'
-  s.version = '0.1.0'
+  s.version = GEM_VERSION
   s.date = '2020-03-18'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Generate boilerplate code for node.js and react.js projects, with all the necessary tooling'
