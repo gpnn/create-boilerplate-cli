@@ -19,15 +19,19 @@ module InitBoilerplate
     puts "\n========================================".colorize(:blue)
     puts "\tInitialize Boilerplate".colorize(:blue)
     puts "========================================\n".colorize(:blue)
-    puts "\nThe current working directory is:\n"
-    puts Dir.pwd
+    display_pwd
+  end
+
+  def self.display_pwd
+    puts "\nThe current working directory is:".colorize(:green)
+    puts Dir.pwd.to_s.colorize(:green)
   end
 
   def self.display_menu
-    puts "\n1. Create node.js project".colorize(:light_blue)
-    puts '2. Create react.js project'.colorize(:light_blue)
-    puts '3. Add GitHub templates'.colorize(:light_blue)
-    puts "4. Exit\n".colorize(:light_blue)
+    puts "\n1. Create node.js project".colorize(:blue)
+    puts '2. Create react.js project'.colorize(:blue)
+    puts '3. Add GitHub templates'.colorize(:blue)
+    puts "4. Exit\n".colorize(:blue)
     puts 'Select an option:'.colorize(:yellow)
     input = STDIN.gets.chomp.strip
     process_option(input.to_i)
@@ -217,6 +221,10 @@ module InitBoilerplate
     puts 'Does your project use TypeScript? (y/n)'.colorize(:yellow)
     input = STDIN.gets.strip.chomp
     typescript = input == 'y'
+    puts 'Make sure this is where you want to create your project (y/n)'.colorize(:magenta)
+    display_pwd
+    confirm = STDIN.gets.strip.chomp
+    exit(0) if confirm != 'y'
     puts 'Creating node.js project'.colorize(:green)
     puts 'With TypeScript' if typescript
     check_npm
@@ -235,6 +243,10 @@ module InitBoilerplate
     puts 'Does your project use TypeScript? (y/n)'.colorize(:yellow)
     input = STDIN.gets.strip.chomp
     typescript = input == 'y'
+    puts 'Make sure this is where you want to create your project (y/n)'.colorize(:magenta)
+    display_pwd
+    confirm = STDIN.gets.strip.chomp
+    exit(0) if confirm != 'y'
     puts 'Creating react.js project'.colorize(:green)
     puts 'With TypeScript' if typescript
     check_npm
@@ -273,7 +285,7 @@ module InitBoilerplate
   end
 
   def self.clean_directory
-    puts "\nCleaning directory...".colorize(:light_blue)
+    puts "\nCleaning directory...".colorize(:blue)
     FileUtils.rm_rf 'src' if File.directory?('src')
     CONFIGS.each do |config|
       File.delete(config) if File.exist?(config)
