@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'json'
 require 'colorize'
+require 'down'
 
 module InitBoilerplate
   CONFIGS = [

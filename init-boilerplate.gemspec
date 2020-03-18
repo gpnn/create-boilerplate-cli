@@ -13,9 +13,9 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.homepage = 'https://github.com/gpnn/create-boilerplate-cli/'
   s.license = 'MIT'
-  s.add_runtime_dependency 'colorize'
-  s.add_runtime_dependency 'down'
-  s.add_development_dependency 'colorize'
-  s.add_development_dependency 'down'
+  s.add_runtime_dependency 'colorize', '~> 0.8.1'
+  s.add_runtime_dependency 'down', '~> 5.1.1'
+  s.add_development_dependency 'colorize', '~> 0.8.1'
+  s.add_development_dependency 'down', '~> 5.1.1'
   s.executables = ['init-boilerplate']
 end
