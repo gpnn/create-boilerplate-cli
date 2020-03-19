@@ -265,7 +265,34 @@ module InitBoilerplate
   end
 
   def self.add_templates
-    # TODO
+    puts 'Creating GitHub template files'.colorize(:green)
+    issue_template_dir = '.github/ISSUE_TEMPLATE'
+    pull_request_template_dir = '.github/PULL_REQUEST_TEMPLATE'
+    FileUtils.mkdir_p issue_template_dir
+    FileUtils.mkdir_p pull_request_template_dir
+
+    issue_templates = [
+        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/bug.md'.freeze,
+        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/epic.md'.freeze,
+        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/story.md'.freeze,
+        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/sub-task.md'.freeze,
+        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/task.md'.freeze
+    ].freeze
+
+    pull_request_template = 'https://github.com/gpnn/git-conventions-guide/raw/master/docs/PULL_REQUEST_TEMPLATE/pull_request_template.md'.freeze
+    readme_template = 'https://github.com/gpnn/git-conventions-guide/raw/master/docs/README_template.md'.freeze
+
+    issue_templates.each do |issue_template|
+      tempfile = Down.download(issue_template)
+      FileUtils.mv tempfile.path, "./#{issue_template_dir}/#{tempfile.original_filename}"
+    end
+
+    tempfile = Down.download(pull_request_template)
+    FileUtils.mv tempfile.path, "./#{pull_request_template_dir}/#{tempfile.original_filename}"
+
+    tempfile = Down.download(readme_template)
+    FileUtils.mv tempfile.path, './README.md'
+
   end
 
   def self.process_option(choice)
