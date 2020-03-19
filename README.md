@@ -7,8 +7,10 @@ A command line interface tool to create boilerplate for react.js and node.js pro
 Less time setting up the tooling, more time developing.
 
 ---
+https://rubygems.org/gems/init-boilerplate
 
 ![GitHub](https://img.shields.io/github/license/gpnn/create-boilerplate-cli?style=flat-square)
+![Gem](https://img.shields.io/gem/v/init-boilerplate?style=flat-square)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/gpnn/create-boilerplate-cli?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/gpnn/create-boilerplate-cli?style=flat-square)
@@ -25,6 +27,8 @@ I decided to create a tool for myself that will set those up for me automaticall
 ## Diagram / Screenshot / GIFs
 
 ![GIF recording](https://github.com/gpnn/create-boilerplate-cli/blob/master/docs/Screen%20Recording%202020-03-14%20at%206.06.27%20PM.mov.gif?raw=true)
+
+_Note: this GIF is a little bit outdated since I published it as a gem._
 
 ## Features
 
@@ -48,25 +52,27 @@ Must have the following installed:
 
 ### Configuration
 
-Run the script and answer the prompts.
+Run the command and answer the prompts.
 
 ### Installing
 
-Clone this repo.
+```bash
+gem install init-boilerplate
+```
 
 ### Usage
 
-Navigate to a fresh directory where you want to start your project and call the script from there.
+Navigate to a fresh directory where you want to start your project and run the following command.
 
 ```bash
-CLONED="~/create-boilerplate-cli"
-ruby ${CLONED}/init_boilerplate.rb
+init-boilerplate
 ```
 
 ## Roadmap
 
-- [ ] Add Git boilerplate
+- [x] Add Git boilerplate
   - README outline, templates, etc.
+- [x] Create and publish Ruby Gem
 
 ## License
 

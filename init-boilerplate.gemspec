@@ -2,7 +2,7 @@ require 'date'
 
 Gem::Specification.new do |s|
   s.name = 'init-boilerplate'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.date = Date.today.to_s
   s.platform = Gem::Platform::RUBY
   s.summary = 'Generate boilerplate code for node.js and react.js projects, with all the necessary tooling'
@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'colorize', '~> 0.8.1'
   s.add_development_dependency 'down', '~> 5.1.1'
   s.executables = ['init-boilerplate']
+  s.required_ruby_version = '>= 2.6'
 end
