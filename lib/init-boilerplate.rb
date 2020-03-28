@@ -220,11 +220,11 @@ module InitBoilerplate
 
   def self.create_node_project
     puts 'Does your project use TypeScript? (y/n)'.colorize(:yellow)
-    input = STDIN.gets.strip.chomp
+    input = STDIN.gets.strip.chomp.downcase
     typescript = input == 'y'
     puts 'Make sure this is where you want to create your project (y/n)'.colorize(:magenta)
     display_pwd
-    confirm = STDIN.gets.strip.chomp
+    confirm = STDIN.gets.strip.chomp.downcase
     exit(0) if confirm != 'y'
     puts 'Creating node.js project'.colorize(:green)
     puts 'With TypeScript' if typescript
@@ -242,11 +242,11 @@ module InitBoilerplate
 
   def self.create_react_project
     puts 'Does your project use TypeScript? (y/n)'.colorize(:yellow)
-    input = STDIN.gets.strip.chomp
+    input = STDIN.gets.strip.chomp.downcase
     typescript = input == 'y'
     puts 'Make sure this is where you want to create your project (y/n)'.colorize(:magenta)
     display_pwd
-    confirm = STDIN.gets.strip.chomp
+    confirm = STDIN.gets.strip.chomp.downcase
     exit(0) if confirm != 'y'
     puts 'Creating react.js project'.colorize(:green)
     puts 'With TypeScript' if typescript

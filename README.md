@@ -9,8 +9,10 @@ Less time setting up the tooling, more time developing.
 ---
 https://rubygems.org/gems/init-boilerplate
 
-![GitHub](https://img.shields.io/github/license/gpnn/create-boilerplate-cli?style=flat-square)
 ![Gem](https://img.shields.io/gem/v/init-boilerplate?style=flat-square)
+![Gem](https://img.shields.io/gem/dt/init-boilerplate?style=flat-square)
+
+![GitHub](https://img.shields.io/github/license/gpnn/create-boilerplate-cli?style=flat-square)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/gpnn/create-boilerplate-cli?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/gpnn/create-boilerplate-cli?style=flat-square)
