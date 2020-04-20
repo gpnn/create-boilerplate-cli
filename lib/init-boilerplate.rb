@@ -139,9 +139,42 @@ module InitBoilerplate
     puts 'Installing and configuring ESLint...'.colorize(:green)
     system('npm install --save-dev eslint eslint-plugin-prettier eslint-config-prettier')
     system('npx eslint --init')
+    if File.exist?(ES_LINT)
+      eslint_json_exists(react)
+    else
+      hash = {
+          plugins: [
+              'prettier'
+          ],
+          rules: {
+              'prettier/prettier': 'error',
+              'no-console': 1
+          },
+          extends: [
+              'prettier',
+              'plugin:prettier/recommended'
+          ]
+      }
+      if react
+        hash['plugins'] << 'react'
+        hash['extends'] << 'plugin:react/recommended'
+        hash['extends'] << 'prettier/react'
+      end
+      File.open(ES_LINT, 'w+') do |file|
+        file.write(JSON.pretty_generate(hash))
+        file.close
+      end
+    end
+  end
+
+  def self.eslint_json_exists(react)
     es_lint = File.read(ES_LINT)
     es_lint_hash = JSON.parse(es_lint)
-    es_lint_hash['plugins'] << 'prettier'
+    if es_lint_hash.key?('plugins')
+      es_lint_hash['plugins'] << 'prettier'
+    else
+      es_lint_hash['plugins'] = 'prettier'
+    end
     es_lint_hash['rules']['prettier/prettier'] = 'error'
     es_lint_hash['rules']['no-console'] = 1
     es_lint_hash['extends'] << 'prettier'
@@ -174,7 +207,7 @@ module InitBoilerplate
   end
 
   def self.configure_commitlint
-    puts 'Installing and configuring commitlint...'
+    puts 'Installing and configuring commitlint...'.colorize(:green)
     system('npm install --save-dev @commitlint/{config-conventional,cli} stylefmt')
     hash = {
         extends: ['@commitlint/config-conventional']
@@ -186,7 +219,8 @@ module InitBoilerplate
   end
 
   def self.configure_husky
-    puts 'Installing and configuring husky with lint-staged...'
+    system('git init') unless Dir.exist?('.git')
+    puts 'Installing and configuring husky with lint-staged...'.colorize(:green)
     system('npx mrm lint-staged')
     package_json = File.read(PACKAGE)
     package_hash = JSON.parse(package_json)
@@ -272,15 +306,15 @@ module InitBoilerplate
     FileUtils.mkdir_p pull_request_template_dir
 
     issue_templates = [
-        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/bug.md'.freeze,
-        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/epic.md'.freeze,
-        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/story.md'.freeze,
-        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/sub-task.md'.freeze,
-        'https://github.com/gpnn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/task.md'.freeze
+        'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/bug.md'.freeze,
+        'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/epic.md'.freeze,
+        'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/story.md'.freeze,
+        'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/sub-task.md'.freeze,
+        'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/ISSUE_TEMPLATE/task.md'.freeze
     ].freeze
 
-    pull_request_template = 'https://github.com/gpnn/git-conventions-guide/raw/master/docs/PULL_REQUEST_TEMPLATE/pull_request_template.md'.freeze
-    readme_template = 'https://github.com/gpnn/git-conventions-guide/raw/master/docs/README_template.md'.freeze
+    pull_request_template = 'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/PULL_REQUEST_TEMPLATE/pull_request_template.md'.freeze
+    readme_template = 'https://github.com/gordonpn/git-conventions-guide/raw/master/docs/README_template.md'.freeze
 
     issue_templates.each do |issue_template|
       tempfile = Down.download(issue_template)
@@ -291,7 +325,7 @@ module InitBoilerplate
     FileUtils.mv tempfile.path, "./#{pull_request_template_dir}/#{tempfile.original_filename}"
 
     tempfile = Down.download(readme_template)
-    FileUtils.mv tempfile.path, './README.md'
+    FileUtils.mv tempfile.path, "./#{tempfile.original_filename}"
 
   end
 

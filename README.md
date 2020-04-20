@@ -7,18 +7,10 @@ A command line interface tool to create boilerplate for react.js and node.js pro
 Less time setting up the tooling, more time developing.
 
 ---
-https://rubygems.org/gems/init-boilerplate
-
-![Gem](https://img.shields.io/gem/v/init-boilerplate?style=flat-square)
-![Gem](https://img.shields.io/gem/dt/init-boilerplate?style=flat-square)
-
-![GitHub](https://img.shields.io/github/license/gpnn/create-boilerplate-cli?style=flat-square)
-
-![GitHub top language](https://img.shields.io/github/languages/top/gpnn/create-boilerplate-cli?style=flat-square)
-![GitHub language count](https://img.shields.io/github/languages/count/gpnn/create-boilerplate-cli?style=flat-square)
-
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gpnn/create-boilerplate-cli?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/gpnn/create-boilerplate-cli?style=flat-square)
+[![RubyGem version](https://badgen.net/rubygems/v/init-boilerplate/latest)](https://rubygems.org/gems/init-boilerplate)
+[![RubyGem downloads](https://badgen.net/rubygems/dt/init-boilerplate)](https://rubygems.org/gems/init-boilerplate)
+![Last commit](https://badgen.net/github/last-commit/gordonpn/create-boilerplate-cli)
+![License](https://badgen.net/github/license/gordonpn/create-boilerplate-cli)
 
 ## Motivation
 
@@ -28,9 +20,7 @@ I decided to create a tool for myself that will set those up for me automaticall
 
 ## Diagram / Screenshot / GIFs
 
-![GIF recording](https://github.com/gpnn/create-boilerplate-cli/blob/master/docs/Screen%20Recording%202020-03-14%20at%206.06.27%20PM.mov.gif?raw=true)
-
-_Note: this GIF is a little bit outdated since I published it as a gem._
+[![asciicast](https://asciinema.org/a/4UemVZE29SWWrfV9Nt2jSo2n2.svg)](https://asciinema.org/a/4UemVZE29SWWrfV9Nt2jSo2n2)
 
 ## Features
 

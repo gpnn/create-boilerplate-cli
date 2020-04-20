@@ -7,4 +7,4 @@ nodemon.json
 .prettierrc
 .eslintrc.json
 .commitlintrc.json
-init-boilerplate-0.1.0.gem
+init-boilerplate-*.gem
