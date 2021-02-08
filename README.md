@@ -7,6 +7,8 @@ A command line interface tool to create boilerplate for react.js and node.js pro
 Less time setting up the tooling, more time developing.
 
 ---
+
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 [![RubyGem version](https://badgen.net/rubygems/v/init-boilerplate/latest)](https://rubygems.org/gems/init-boilerplate)
 [![RubyGem downloads](https://badgen.net/rubygems/dt/init-boilerplate)](https://rubygems.org/gems/init-boilerplate)
 ![Last commit](https://badgen.net/github/last-commit/gordonpn/create-boilerplate-cli)
@@ -65,6 +67,10 @@ init-boilerplate
 - [x] Add Git boilerplate
   - README outline, templates, etc.
 - [x] Create and publish Ruby Gem
+
+## Authors
+
+[@gordonpn](https://github.com/gordonpn)
 
 ## License
 
